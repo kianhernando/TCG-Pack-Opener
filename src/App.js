@@ -6,6 +6,7 @@ function App() {
   const [pokemonName, setPokemonName] = useState("");
   const [pokemon, setPokemon] = useState({});
   const [pokemonChosen, setPokemonChosen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const searchPokemon = () => {
     // CLEAR PREV POKEMON (FOR TESTING)
@@ -46,7 +47,15 @@ function App() {
         setPokemonChosen(false);
       });
   };
-  
+  // NEXT POKEMON
+  const nextPokemon = () => {
+    setCurrentIndex((prev) => (prev + 1) % pokemon.length);
+  };
+  // PREV POKEMON
+  const prevPokemon = () => {
+    setCurrentIndex((prev) => (prev - 1 + pokemon.length) % pokemon.length);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -56,14 +65,17 @@ function App() {
           <h1>Click the button to generate Pokemon!</h1>
         ) : (
           <div>
-            {pokemon.map((p, index) => (
-              <div key={index}>
-                <h1>{p.name}</h1>
-                <img src={p.img} alt={p.name} />
-                <h3>Move: {p.move}</h3>
-                <h3>Type: {p.type}</h3>
-              </div>
-            ))}
+            <div>
+              <h1>{pokemon[currentIndex].name}</h1>
+              <img src={pokemon[currentIndex].img} alt={pokemon[currentIndex].name} />
+              <h3>Move: {pokemon[currentIndex].move}</h3>
+              <h3>Type: {pokemon[currentIndex].type}</h3>
+            </div>
+            <div>
+              <button onClick={prevPokemon}>Previous</button>
+              <span> Pokemon {currentIndex + 1} of {pokemon.length} </span>
+              <button onClick={nextPokemon}>Next</button>
+            </div>
           </div>
         )}
       </header>
