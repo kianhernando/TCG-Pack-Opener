@@ -11,6 +11,7 @@ function App() {
   const searchPokemon = () => {
     // CLEAR PREV POKEMON (FOR TESTING)
     setPokemonChosen(false);
+    setCurrentIndex(0);
     
     // POKEMON ARRAY
     const pokemonPromises = [];
@@ -18,6 +19,8 @@ function App() {
     // GENERATE 5 POKEMON
     for (let i = 0; i < 5; i++) {
       const randomId = Math.floor(Math.random() * 898) + 1;
+      const isShiny = Math.random() < 0.001; // 0.1% SHINY
+
       // PROMISE TO CHECK API RESPONSE, THEN RETURN JSON
       const promise = fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`)
         .then((response) => {
@@ -29,8 +32,10 @@ function App() {
         .then((data) => ({
           name: data.name,
           move: data.moves[Math.floor(Math.random() * data.moves.length)].move.name,
-          img: data.sprites.front_default,
+          // CHECK FOR SHINY, THEN SET SPRITE
+          img: isShiny ? data.sprites.front_shiny : data.sprites.front_default,
           type: data.types[0].type.name,
+          isShiny: isShiny,
         }));
       // PUSH PROMISE TO ARRAY
       pokemonPromises.push(promise);
@@ -66,7 +71,7 @@ function App() {
         ) : (
           <div>
             <div>
-              <h1>{pokemon[currentIndex].name}</h1>
+              <h1>{pokemon[currentIndex].name} {pokemon[currentIndex].isShiny && "✨"}</h1>  {/* ONLY SHOWS IF SHINY */}
               <img src={pokemon[currentIndex].img} alt={pokemon[currentIndex].name} />
               <h3>Move: {pokemon[currentIndex].move}</h3>
               <h3>Type: {pokemon[currentIndex].type}</h3>
