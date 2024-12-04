@@ -1,65 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import PokemonController from './controllers/PokemonController';
+import PokemonDisplay from './components/PokemonDisplay';
+import PokemonNavigation from './components/PokemonNavigation';
 
 function App() {
-  const [pokemonName, setPokemonName] = useState("");
-  const [pokemon, setPokemon] = useState({});
+  const [pokemon, setPokemon] = useState([]);
   const [pokemonChosen, setPokemonChosen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+
   const searchPokemon = () => {
-    // CLEAR PREV POKEMON (FOR TESTING)
     setPokemonChosen(false);
     setCurrentIndex(0);
     
-    // POKEMON ARRAY
-    const pokemonPromises = [];
-    
-    // GENERATE 5 POKEMON
-    for (let i = 0; i < 5; i++) {
-      const randomId = Math.floor(Math.random() * 898) + 1;
-      const isShiny = Math.random() < 0.001; // 0.1% SHINY
-
-      // PROMISE TO CHECK API RESPONSE, THEN RETURN JSON
-      const promise = fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Pokemon not found');
-          }
-          return response.json();
-        })
-        .then((data) => ({
-          name: data.name,
-          move: data.moves[Math.floor(Math.random() * data.moves.length)].move.name,
-          // CHECK FOR SHINY, THEN SET SPRITE
-          img: isShiny ? data.sprites.front_shiny : data.sprites.front_default,
-          type: data.types[0].type.name,
-          isShiny: isShiny,
-        }));
-      // PUSH PROMISE TO ARRAY
-      pokemonPromises.push(promise);
-    }
-
-    // WAIT FOR PROMISE TO FINISH, THEN SET POKEMON
-    Promise.all(pokemonPromises)
+    PokemonController.fetchRandomPokemon(5)
       .then((pokemonList) => {
         setPokemon(pokemonList);
         setPokemonChosen(true);
       })
-      .catch((error) => {
+      .catch((error) => {     // THANKS PAUL FOR TEACHING ME CATCH
         console.error('Error:', error);
         setPokemonChosen(false);
       });
   };
-  // NEXT POKEMON
-  const nextPokemon = () => {
-    setCurrentIndex((prev) => (prev + 1) % pokemon.length);
-  };
-  // PREV POKEMON
-  const prevPokemon = () => {
-    setCurrentIndex((prev) => (prev - 1 + pokemon.length) % pokemon.length);
-  };
+
+  const nextPokemon = () => setCurrentIndex((prev) => (prev + 1) % pokemon.length);
+  const prevPokemon = () => setCurrentIndex((prev) => (prev - 1 + pokemon.length) % pokemon.length);
 
   return (
     <div className="App">
@@ -70,17 +38,13 @@ function App() {
           <h1>Click the button to generate Pokemon!</h1>
         ) : (
           <div>
-            <div>
-              <h1>{pokemon[currentIndex].name} {pokemon[currentIndex].isShiny && "✨"}</h1>  {/* ONLY SHOWS IF SHINY */}
-              <img src={pokemon[currentIndex].img} alt={pokemon[currentIndex].name} />
-              <h3>Move: {pokemon[currentIndex].move}</h3>
-              <h3>Type: {pokemon[currentIndex].type}</h3>
-            </div>
-            <div>
-              <button onClick={prevPokemon}>Previous</button>
-              <span> Pokemon {currentIndex + 1} of {pokemon.length} </span>
-              <button onClick={nextPokemon}>Next</button>
-            </div>
+            <PokemonDisplay pokemon={pokemon[currentIndex]} />
+            <PokemonNavigation 
+              currentIndex={currentIndex}
+              totalCount={pokemon.length}
+              onPrev={prevPokemon}
+              onNext={nextPokemon}
+            />
           </div>
         )}
       </header>
