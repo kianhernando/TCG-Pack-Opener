@@ -18,6 +18,13 @@ class PokemonController {
 
     return Promise.all(pokemonPromises);
   }
+
+  static async fetchPokemonByNumber(number) {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${number}`);
+    if (!response.ok) throw new Error('Pokemon not found');
+    const data = await response.json();
+    return new Pokemon(data);
+  }
 }
 
 export default PokemonController;
