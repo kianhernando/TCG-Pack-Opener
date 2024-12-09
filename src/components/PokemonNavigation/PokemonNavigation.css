@@ -1,0 +1,70 @@
+.cardContainer {
+    position: relative;
+    background: steelblue;
+    opacity: 60%;
+    width: 1000px;
+    height: 750px;
+    border: 2px solid rgba(255, 255, 255, .1);
+    backdrop-filter: blur(30px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+
+.navigation {
+    position: absolute;
+    bottom: 10px; /* Margin from the bottom */
+    display: flex;
+    justify-content: space-between; /* Space out the previous and next buttons */
+    width: calc(100% - 40px); /* Full width minus padding */
+    padding: 0 20px; /* Padding to prevent buttons from touching the container edges */
+}
+
+.previous button {
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 700;
+    padding: 5px 20px; /* Padding for the button */
+    box-sizing: border-box; /* Include padding in element's width */
+    position: absolute; /* Position relative to its container */
+    bottom: 10px; /* Aligns the button to the bottom */
+    left: 10px; /* Aligns the button to the left */
+    margin-top: 50px; /* 50px margin from the bottom */
+}
+
+.next button {
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 700;
+    padding: 5px 20px; /* Padding for the button */
+    box-sizing: border-box; /* Include padding in element's width */
+    position: absolute; /* Position relative to its container */
+    bottom: 10px; /* Aligns the button to the bottom */
+    right: 10px; /* Aligns the button to the right */
+}
+
+.count {
+        text-align: center; /* Center the content horizontally */
+        font-size: 20px; /* Increase the font size */
+        font-weight: bold;
+        color: black; /* Font color */
+        position: absolute; /* Position relative to its container */
+        top: 600px; /* Center vertically within the container */
+        left: 50%; /* Center horizontally within the container */
+        transform: translate(-50%, -50%); /* Translate to center */
+}

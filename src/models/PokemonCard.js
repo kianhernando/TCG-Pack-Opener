@@ -24,4 +24,3 @@ class PokemonCard {
 }
 
 export default PokemonCard;
-

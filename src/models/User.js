@@ -1,7 +1,7 @@
 class User {
   constructor(userId) {
     this.userId = userId;
-    this.inventory = new Map(); // NEW MAP FOR USER INVENTORY (THANKS LEETCODE AND HUNG BUI FOR TEACHING ME)
+    this.inventory = new Map(); // THANKS LEETCODE AND HUNG BUI FOR TEACHING ME MAPS
   }
 
   addCard(pokemonCard) {
@@ -9,8 +9,12 @@ class User {
   }
 
   removeCard(cardId) {
-    this.inventory.delete(cardId);
-  } d
+    if (!this.inventory.has(cardId)) {
+      console.warn(`Card with ID ${cardId} not found in inventory`);
+      return false;
+    }
+    return this.inventory.delete(cardId);
+  }
 
   getCard(cardId) {
     return this.inventory.get(cardId);
@@ -21,4 +25,4 @@ class User {
   }
 }
 
-export default User; 
+export default User;
