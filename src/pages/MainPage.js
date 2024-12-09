@@ -3,6 +3,7 @@ import '../App.css';
 import PokemonDisplay from '../components/PokemonDisplay';
 import PokemonNavigation from '../components/PokemonNavigation';
 import MusicPlayer from '../components/MusicPlayer';
+import PokemonCollection from '../components/PokemonCollection';
 
 export default function MainPage({ 
   pokemon, 
@@ -10,7 +11,10 @@ export default function MainPage({
   currentIndex, 
   searchPokemon, 
   nextPokemon, 
-  prevPokemon 
+  prevPokemon,
+  collectAllPokemon,
+  deleteCard,
+  getAllCards 
 }) {
   return (
     <div className="App">
@@ -30,8 +34,10 @@ export default function MainPage({
               onPrev={prevPokemon}
               onNext={nextPokemon}
             />
+            <button onClick={collectAllPokemon}>Collect All Pokemon</button>
           </div>
         )}
+        <PokemonCollection cards={getAllCards()} onDelete={deleteCard} />
       </header>
     </div>
   );

@@ -7,7 +7,7 @@ class Pokemon {
     this.img = data.sprites.front_default;
     this.shinyImg = data.sprites.front_shiny;
     this.type = data.types[0].type.name;
-    this.isShiny = Math.random() < 0.001; // 0.1% shiny chance
+    this.isShiny = Math.random() < 0.001; // 0.1% CHANCE FOR SHINY POKEMON
   }
 
   toCard(userId = null) {
