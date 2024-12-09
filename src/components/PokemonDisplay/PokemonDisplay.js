@@ -1,16 +1,7 @@
 import './PokemonDisplay.css'
 
-export default function PokemonDisplay ({
-  pokemon, 
-  pokemonChosen, 
-  currentIndex, 
-  searchPokemon, 
-  nextPokemon, 
-  prevPokemon,
-  collectAllPokemon,
-  deleteCard,
-  getAllCards,
-}) {
+function PokemonDisplay({ pokemon }) {
+  
   return (
     <div>
       <h1>{pokemon.name} {pokemon.isShiny && "✨"}</h1>
@@ -20,3 +11,4 @@ export default function PokemonDisplay ({
     </div>
   );
 }
+export default PokemonDisplay;

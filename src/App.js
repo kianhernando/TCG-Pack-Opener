@@ -6,14 +6,14 @@ import PokemonDisplay from './components/PokemonDisplay/PokemonDisplay';
 import PokemonNavigation from './components/PokemonNavigation/PokemonNavigation';
 import LoginRegister from './components/LoginRegister/LoginRegister';
 import MainPage from './pages/MainPage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <div>
      {/* <LoginRegister/> */}
      {/* <MainPage/> */}
-     {/* <PokemonNavigation/> */}
-     <PokemonDisplay/>
+     <PokemonNavigation/>
     </div>
   );
   // const [pokemon, setPokemon] = useState([]);

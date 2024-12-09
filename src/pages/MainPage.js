@@ -52,7 +52,7 @@ const MainPage = () => {
           </div>
 
           {/* <MusicPlayer /> */}
-          {!pokemonChosen ? (
+           {!pokemonChosen ? (
             <h1 className='title'>Click the Pokeball to generate Pokemon!</h1>
           ) : (
             <div>

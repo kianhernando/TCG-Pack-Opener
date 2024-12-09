@@ -1,7 +1,7 @@
 import PokemonCard from './PokemonCard';
 
 class Pokemon {
-  constructor(data, name, id, img, shinyImg, type, isShiny) {
+  constructor(data) {
     this.name = data.name;
     this.id = data.id;
     this.img = data.sprites.front_default;

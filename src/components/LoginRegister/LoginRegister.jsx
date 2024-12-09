@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './LoginRegister.css';
+import { Navigate } from 'react-router-dom';
 
 const LoginRegister = () => {
 
@@ -10,6 +11,7 @@ const LoginRegister = () => {
      };
      const loginLink = () => {
          setAction('');
+
      };
      return (
         <div className={`wrapper${action}`}>
