@@ -1,7 +1,7 @@
 import './PokemonNavigation.css'
-import Pokemon from '../models/Pokemon';
+import Pokemon from '../../models/Pokemon';
 import { useState, useEffect } from 'react';
-import PokemonController from '../controllers/PokemonController';
+import PokemonController from '../../controllers/PokemonController';
 
 export default function PokemonCards() {
   const [pokemon, setPokemon] = useState([]);

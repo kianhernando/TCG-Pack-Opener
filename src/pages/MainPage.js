@@ -1,7 +1,7 @@
 import logo from '../logo.svg';
 import '../App.css';
 import PokemonDisplay from '../PokemonDisplay';
-import PokemonNavigation from '../PokemonNavigation/PokemonNavigation';
+import PokemonNavigation from '../components/PokemonNavigation/PokemonNavigation'
 import PokemonController from '../controllers/PokemonController';
 import Pokemon from '../models/Pokemon';
 import './MainPage.css'

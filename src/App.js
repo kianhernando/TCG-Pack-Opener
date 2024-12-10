@@ -2,7 +2,7 @@ import { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import PokemonController from './controllers/PokemonController';
-import PokkemonNavigation from './components/PokemonNavigation/PokemonNavigation'
+import PokemonNavigation from './components/PokemonNavigation/PokemonNavigation'
 import LoginRegister from './components/LoginRegister/LoginRegister';
 import MainPage from './pages/MainPage';
 
