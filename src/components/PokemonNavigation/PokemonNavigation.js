@@ -1,8 +1,12 @@
-import './PokemonNavigation.css'
-import Pokemon from '../../models/Pokemon';
-import { useState, useEffect } from 'react';
-import PokemonController from '../../controllers/PokemonController';
-import Pokedex from './Pokedex.png'
+import "./PokemonNavigation.css";
+import Pokemon from "../../models/Pokemon";
+import { useState, useEffect } from "react";
+import PokemonController from "../../controllers/PokemonController";
+import Pokedex from "./Pokedex.png";
+import PokemonCard from "../../models/PokemonCard";
+import { supabase } from "../../lib/supabaseClient";
+import { handleLogout } from "../../utils/auth";
+import { Link } from 'react-router-dom';
 
 export default function PokemonCards() {
   const [pokemon, setPokemon] = useState([]);
@@ -14,8 +18,10 @@ export default function PokemonCards() {
     searchPokemon();
   }, []);
 
-  const nextPokemon = () => setCurrentIndex((prev) => (prev + 1) % pokemon.length);
-  const prevPokemon = () => setCurrentIndex((prev) => (prev - 1 + pokemon.length) % pokemon.length);
+  const nextPokemon = () =>
+    setCurrentIndex((prev) => (prev + 1) % pokemon.length);
+  const prevPokemon = () =>
+    setCurrentIndex((prev) => (prev - 1 + pokemon.length) % pokemon.length);
 
   const searchPokemon = () => {
     setIsLoading(true);
@@ -29,17 +35,40 @@ export default function PokemonCards() {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.error("Error:", error);
         setPokemonChosen(false);
         setIsLoading(false);
       });
   };
 
+  const savePokemonToInventory = async () => {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        alert("Please log in to save Pokemon");
+        return;
+      }
+
+      const savePromises = pokemon.map((poke) => {
+        const pokemonCard = PokemonCard.fromPokemon(poke, user.id);
+        return pokemonCard.save();
+      });
+
+      await Promise.all(savePromises);
+      alert("Pokemon saved to inventory!");
+    } catch (error) {
+      console.error("Error saving Pokemon:", error);
+      alert("Failed to save Pokemon. Please try again.");
+    }
+  };
+
   if (isLoading || !pokemonChosen || !pokemon || pokemon.length === 0) {
     return (
-      <div className='cardContainer'>
+      <div className="cardContainer">
         {/* <h1>Loading Pokemon...</h1> */}
-        <div className='genPokemon'>
+        <div className="genPokemon">
           <button onClick={searchPokemon}>Generate 5 Random Pokemon</button>
         </div>
       </div>
@@ -50,9 +79,9 @@ export default function PokemonCards() {
 
   if (!currentPokemon) {
     return (
-      <div className='cardContainer'>
+      <div className="cardContainer">
         <h1>Error loading Pokemon</h1>
-        <div className='genPokemon'>
+        <div className="genPokemon">
           <button onClick={searchPokemon}>Try Again</button>
         </div>
       </div>
@@ -61,23 +90,26 @@ export default function PokemonCards() {
 
   return (
     <div>
-      <nav class="navbar">
-        <div class="navbar-container">
+      <nav className="navbar">
+        <div className="navbar-container">
           <h3>TCG Pack Opener</h3>
-          <a href="" class="logout-link">Logout</a>
+          <button onClick={handleLogout} className="logout-link">
+            Logout
+          </button>
         </div>
       </nav>
 
-      <a href="src/components/PokemonNavigation/PokemonInventory.js" className="pokedex-button" 
-              onClick={() => window.location.href = 'pages/PokemonInventory.js'}>
-            <img src={Pokedex} alt="pokedex" className="pokeball-image" />
-      </a>
+      <Link to="/inventory" className="pokedex-button">
+        <img src={Pokedex} alt="pokedex" className="pokeball-image" />
+      </Link>
 
-      <div className='cardContainer'>
+      <div className="cardContainer">
         <div className="pokeCard">
           <div className="pokemon-card">
             <div className="pokemon-name">
-              <h1>{currentPokemon.name} {currentPokemon.isShiny && "✨"}</h1>
+              <h1>
+                {currentPokemon.name} {currentPokemon.isShiny && "✨"}
+              </h1>
             </div>
 
             <div className="pokemon-image">
@@ -90,25 +122,29 @@ export default function PokemonCards() {
           </div>
         </div>
 
-        <div className='pokedex'>
+        <div className="pokedex">
           <h3>National Pokedex #{currentPokemon.id}</h3>
         </div>
 
-        <div className='count'>
-          <span>Pokemon {currentIndex + 1} of {pokemon.length}</span>
+        <div className="count">
+          <span>
+            Pokemon {currentIndex + 1} of {pokemon.length}
+          </span>
         </div>
 
         <div className="navigation-buttons">
-          <div className='previous'>
+          <div className="previous">
             <button onClick={prevPokemon}>Previous</button>
           </div>
-          <div className='next'>
+          <div className="next">
             <button onClick={nextPokemon}>Next</button>
           </div>
         </div>
 
-        <div className='genPokemon'>
-          <button onClick={''}>Save Pokemon to Inventory</button>
+        <div className="genPokemon">
+          <button onClick={savePokemonToInventory}>
+            Save Pokemon to Inventory
+          </button>
         </div>
       </div>
     </div>

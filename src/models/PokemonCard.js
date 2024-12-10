@@ -10,8 +10,8 @@ class PokemonCard {
   }
 
   // MAKE NEW POKEMON CARD FROM POKEMON INFO
-  static fromPokemon(pokemon) {
-    return new PokemonCard(pokemon.id, pokemon.isShiny);
+  static fromPokemon(pokemon, userId) {
+    return new PokemonCard(pokemon.id, userId, pokemon.isShiny);
   }
 
   // FETCH POKEMON FROM API
@@ -27,14 +27,16 @@ class PokemonCard {
   // DATABASE CRUD OPERATIONS
   async save() {
     try {
-      // FETCH USER ID FROM DATABASE LATER
-      // SAVE POKEMON CARD TO DATABASE  
+      if (!this.userId) {
+        throw new Error('Cannot save card: No user ID provided');
+      }
+
       const { data, error } = await supabase
         .from('pokemon_cards')
         .insert({
           id: this.id,
           pokemon_number: this.pokemonNumber,
-          user_id: this.userId, // PASS USER ID FROM DATABASE LATER
+          user_id: this.userId,
           is_shiny: this.isShiny
         })
         .select()
@@ -94,6 +96,22 @@ class PokemonCard {
       console.error('Failed to delete card:', error);
       throw error;
     }
+  }
+}
+
+// When saving a Pokemon to collection:
+async function savePokemonToCollection(pokemon) {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('Must be logged in to save Pokemon');
+    
+    const pokemonCard = PokemonCard.fromPokemon(pokemon, user.id);
+    await pokemonCard.save();
+    
+    // Handle success (e.g., show notification)
+  } catch (error) {
+    console.error('Error saving Pokemon:', error);
+    // Handle error (e.g., show error message)
   }
 }
 

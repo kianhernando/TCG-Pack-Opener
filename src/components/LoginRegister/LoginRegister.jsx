@@ -2,71 +2,177 @@ import React, { useState } from 'react';
 import './LoginRegister.css';
 import MainPage from '../../pages/MainPage';
 import { Link } from 'react-router-dom';
+import { supabase } from '../../lib/supabaseClient';
 
 const LoginRegister = () => {
+    const [action, setAction] = useState('');
+    const [showNotification, setShowNotification] = useState(false);
+    // ADD STATES FOR FORM INPUT
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        username: ''
+    });
 
-     const [action, setAction] = useState('');
+    // INPUT HANDLER
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-     const registerLink = () => {
-         setAction(' active');
-     };
-     const loginLink = () => {
-         setAction('');
+    // LOGIN HANDLER
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: formData.email,
+                password: formData.password,
+            });
+            if (error) throw error;
+            
+            // Store user session data
+            const { data: { user } } = await supabase.auth.getUser()
+            console.log('Logged in user:', user);
+            
+            // Redirect to main page or handle successful login
+            window.location.href = '/main'; // or use navigation from react-router
+        } catch (error) {
+            console.error('Login error:', error.message);
+            alert(error.message);
+        }
+    };
 
-     };
-     return (
-        <div className={`wrapper${action}`}>
-            <div className='form-box login'>
-                <form action=''>
-                    <h1>Login</h1>
-                    <div className='input-box'>
-                        <input type='text' placeholder='Username' required />
-                    </div>
-                    <div className='input-box'>
-                        <input type='password' placeholder='Password' required />
-                    </div>
+    // REGISTER HANDLER
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        try {
+            const { data, error } = await supabase.auth.signUp({
+                email: formData.email,
+                password: formData.password,
+                options: {
+                    data: {
+                        username: formData.username,
+                    }
+                }
+            });
+            if (error) {
+                console.error('Registration error:', error.message);
+                alert(error.message);
+                return;
+            }
+            
+            if (data?.user) {
+                console.log('Registration successful:', data.user);
+                setShowNotification(true);
+                setFormData({
+                    email: '',
+                    password: '',
+                    username: ''
+                });
+                setTimeout(() => setShowNotification(false), 5000);
+            }
+        } catch (error) {
+            console.error('Registration error:', error.message);
+            alert('An unexpected error occurred during registration.');
+        }
+    };
 
-                    <div className='remember-forgot'>
-                        <label><input type='checkbox' />Remember Me</label>
-                        <a href='#'>Forgot Password</a>
-                    </div>
-                    {/* <Link to={MainPage}> */}
-                    <button type='submit' onClick={() => window.location.href = 'pages/MainPage.js'}>Login</button>
-                    {/* </Link> */}
-                    {/* <Link to={"./mainpage"}>Login</Link> */}
-                    <div className='register-link'>
-                        <p>Don't have an account? <a href='#' onClick=
-                        {registerLink}>Register</a></p>
-                    </div>
-                </form>
+    const registerLink = () => {
+        setAction(' active');
+    };
+    const loginLink = () => {
+        setAction('');
+    };
+    return (
+        <>
+            {showNotification && (
+                <div className="email-notification">
+                    Please check your email to confirm your registration!
+                </div>
+            )}
+            <div className={`wrapper${action}`}>
+                <div className='form-box login'>
+                    <form onSubmit={handleLogin}>
+                        <h1>Login</h1>
+                        <div className='input-box'>
+                            <input 
+                                type='email' 
+                                name='email'
+                                placeholder='Email' 
+                                required 
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className='input-box'>
+                            <input 
+                                type='password' 
+                                name='password'
+                                placeholder='Password' 
+                                required 
+                                onChange={handleChange}
+                            />
+                        </div>
+
+                        <div className='remember-forgot'>
+                            <label><input type='checkbox' />Remember Me</label>
+                            <a href='#'>Forgot Password</a>
+                        </div>
+
+                        <button type='submit'>Login</button>
+
+                        <div className='register-link'>
+                            <p>Don't have an account? <a href='#' onClick=
+                            {registerLink}>Register</a></p>
+                        </div>
+                    </form>
+                </div>
+
+                <div className='form-box register'>
+                    <form onSubmit={handleRegister}>
+                        <h1>Register</h1>
+                        <div className='input-box'>
+                            <input 
+                                type='text' 
+                                name='username'
+                                placeholder='Username' 
+                                required 
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className='input-box'>
+                            <input 
+                                type='email' 
+                                name='email'
+                                placeholder='Email' 
+                                required 
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className='input-box'>
+                            <input 
+                                type='password' 
+                                name='password'
+                                placeholder='Password' 
+                                required 
+                                onChange={handleChange}
+                            />
+                        </div>
+
+                        <div className='remember-forgot'>
+                            <label><input type='checkbox' />I agree to the terms & conditions</label>
+                        </div>
+
+                        <button type='submit'>Register</button>
+
+                        <div className='register-link'>
+                            <p>Already have an account? <a href='#' onClick=
+                            {loginLink}>Login</a></p>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <div className='form-box register'>
-                <form action=''>
-                    <h1>Register</h1>
-                    <div className='input-box'>
-                        <input type='text' placeholder='Username' required />
-                    </div>
-                    <div className='input-box'>
-                        <input type='email' placeholder='Email' required />
-                    </div>
-                    <div className='input-box'>
-                        <input type='password' placeholder='Password' required />
-                    </div>
-
-                    <div className='remember-forgot'>
-                        <label><input type='checkbox' />I agree to the terms & conditions</label>
-                    </div>
-
-                    <button type='submit'>Register</button>
-                    
-                    <div className='register-link'>
-                        <p>Already have an account? <a href='#' onClick=
-                        {loginLink}>Login</a></p>
-                    </div>
-                </form>
-            </div>
-        </div>
-     )
+        </>
+    )
 }
-export default LoginRegister
+
+
+export default LoginRegister;
