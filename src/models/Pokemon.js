@@ -7,14 +7,13 @@ class Pokemon {
     this.img = data.sprites.front_default;
     this.shinyImg = data.sprites.front_shiny;
     this.type = data.types[0].type.name;
-    this.isShiny = Math.random() < 0.001; // 0.1% shiny chance
+    this.isShiny = Math.random() < 0.05; // 5% CHANCE FOR SHINY
   }
 
   toCard(userId = null) {
     return new PokemonCard(this.id, userId, this.isShiny);
   }
 
-  // IF SHINY, RETURN SHINY, ELSE, RETURN DEFAULT
   getImage() {
     return this.isShiny ? this.shinyImg : this.img;
   }

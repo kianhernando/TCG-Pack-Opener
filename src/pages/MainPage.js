@@ -1,5 +1,6 @@
 import logo from '../logo.svg';
 import '../App.css';
+
 import PokemonDisplay from '../PokemonDisplay';
 import PokemonNavigation from '../components/PokemonNavigation/PokemonNavigation'
 import PokemonController from '../controllers/PokemonController';

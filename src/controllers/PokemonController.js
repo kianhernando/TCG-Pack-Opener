@@ -5,7 +5,7 @@ class PokemonController {
     const pokemonPromises = [];
     
     for (let i = 0; i < count; i++) {
-      const randomId = Math.floor(Math.random() * 898) + 1;
+      const randomId = Math.floor(Math.random() * 1025) + 1;
       const promise = fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`)
         .then((response) => {
           if (!response.ok) throw new Error('Pokemon not found');
