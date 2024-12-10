@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PokemonController from './PokemonController';
 import User from '../models/User';
 
@@ -8,6 +8,15 @@ export default function useMainPageController() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [user] = useState(new User("default-user"));
   const [collection, setCollection] = useState([]);
+
+  // LOAD CARDS WHEN USER IS LOADED
+  useEffect(() => {
+    const loadUserCards = async () => {
+      const cards = await user.loadCards();
+      setCollection(cards);
+    };
+    loadUserCards();
+  }, [user]);
 
   const searchPokemon = () => {
     setPokemonChosen(false);
@@ -24,11 +33,11 @@ export default function useMainPageController() {
       });
   };
 
-  const collectAllPokemon = () => {
-    pokemon.forEach(poke => {
+  const collectAllPokemon = async () => {
+    for (const poke of pokemon) {
       const card = poke.toCard();
-      user.addCard(card);
-    });
+      await user.addCard(card);
+    }
     
     setPokemon([]);
     setPokemonChosen(false);
@@ -36,8 +45,8 @@ export default function useMainPageController() {
     setCollection(user.getAllCards());
   };
 
-  const deleteCard = (cardId) => {
-    user.removeCard(cardId);
+  const deleteCard = async (cardId) => {
+    await user.removeCard(cardId);
     setCollection(user.getAllCards());
   };
 
