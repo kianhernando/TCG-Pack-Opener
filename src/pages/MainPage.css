@@ -85,3 +85,10 @@
   .logout-link:hover {
     background-color: #ddd;
   }
+
+  .navbar h3 {
+    text-align: center;
+    margin-right: 41%;
+    font-weight: bolder;
+    color: #f5f5f5;
+  }

@@ -2,6 +2,7 @@ import './PokemonNavigation.css'
 import Pokemon from '../../models/Pokemon';
 import { useState, useEffect } from 'react';
 import PokemonController from '../../controllers/PokemonController';
+import Pokedex from './Pokedex.png'
 
 export default function PokemonCards() {
   const [pokemon, setPokemon] = useState([]);
@@ -37,7 +38,7 @@ export default function PokemonCards() {
   if (isLoading || !pokemonChosen || !pokemon || pokemon.length === 0) {
     return (
       <div className='cardContainer'>
-        <h1>Loading Pokemon...</h1>
+        {/* <h1>Loading Pokemon...</h1> */}
         <div className='genPokemon'>
           <button onClick={searchPokemon}>Generate 5 Random Pokemon</button>
         </div>
@@ -60,12 +61,17 @@ export default function PokemonCards() {
 
   return (
     <div>
-
       <nav class="navbar">
         <div class="navbar-container">
+          <h3>TCG Pack Opener</h3>
           <a href="" class="logout-link">Logout</a>
         </div>
       </nav>
+
+      <a href="src/components/PokemonNavigation/PokemonInventory.js" className="pokedex-button" 
+              onClick={() => window.location.href = 'pages/PokemonInventory.js'}>
+            <img src={Pokedex} alt="pokedex" className="pokeball-image" />
+      </a>
 
       <div className='cardContainer'>
         <div className="pokeCard">
@@ -102,7 +108,7 @@ export default function PokemonCards() {
         </div>
 
         <div className='genPokemon'>
-          <button onClick={searchPokemon}>Generate 5 Random Pokemon</button>
+          <button onClick={''}>Save Pokemon to Inventory</button>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './LoginRegister.css';
-import { Navigate } from 'react-router-dom';
+import MainPage from '../../pages/MainPage';
+import { Link } from 'react-router-dom';
 
 const LoginRegister = () => {
 
@@ -29,9 +30,10 @@ const LoginRegister = () => {
                         <label><input type='checkbox' />Remember Me</label>
                         <a href='#'>Forgot Password</a>
                     </div>
-
-                    <button type='submit'>Login</button>
-
+                    {/* <Link to={MainPage}> */}
+                    <button type='submit' onClick={() => window.location.href = 'pages/MainPage.js'}>Login</button>
+                    {/* </Link> */}
+                    {/* <Link to={"./mainpage"}>Login</Link> */}
                     <div className='register-link'>
                         <p>Don't have an account? <a href='#' onClick=
                         {registerLink}>Register</a></p>
@@ -56,8 +58,8 @@ const LoginRegister = () => {
                         <label><input type='checkbox' />I agree to the terms & conditions</label>
                     </div>
 
-                    <button type='submit'>Login</button>
-
+                    <button type='submit'>Register</button>
+                    
                     <div className='register-link'>
                         <p>Already have an account? <a href='#' onClick=
                         {loginLink}>Login</a></p>
