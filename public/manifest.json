@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "TCG Pack Opener",
+  "name": "TCD Pack Opener",
   "icons": [
     {
       "src": "favicon.ico",

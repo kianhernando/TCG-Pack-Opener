@@ -74,11 +74,6 @@ export default function PokemonInventory() {
                 </div>
             </nav>
 
-            <div className="header">
-                <h1>Your Pokémon Collection</h1>
-                <p>Your Pokemon Collection</p>
-            </div>
-
             {isLoading ? (
                 <div>Loading your collection...</div>
             ) : (
