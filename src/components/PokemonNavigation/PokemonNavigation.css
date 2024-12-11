@@ -1,4 +1,3 @@
-
 .cardContainer {
   position: relative;
   background: url(/src/components/PokemonNavigation/3551101-2207410407.png);
@@ -14,8 +13,6 @@
   overflow: hidden;
   margin-top: 20px;
 }
-
-
 
 .navigation {
   position: absolute;
@@ -39,28 +36,50 @@
   padding: 5px 20px;
   box-sizing: border-box;
   position: absolute;
-  bottom: 10px;
+  bottom: 30px;
   left: 10px;
-  margin-top: 50px;
- 
+  transition: all 0.3s ease;
 }
 
-.genPokemon button
-{
+.previous button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.genPokemon {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.genPokemon button {
   font-weight: bolder;
   background-color: #fff;
-  color: 0 0 10px rgba(0, 0, 0, .1);
-  padding: 10px 20px; 
+  color: #333;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 }
+
+/* Save button hover effect (blue) */
+.genPokemon button:first-child:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Generate button hover effect (red) */
+.genPokemon button:last-child:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
 .next button {
   background: #fff;
   border: none;
@@ -74,35 +93,43 @@
   padding: 5px 20px;
   box-sizing: border-box;
   position: absolute;
-  bottom: 10px;
+  bottom: 30px;
   right: 10px;
+  transition: all 0.3s ease;
+}
+
+.next button:hover {
+  background-color: #dc3545;
+  color: white;
 }
 
 .count {
   text-align: center;
   font-size: 20px;
   font-weight: bold;
-  color: black;
+  color: #fff;
   position: absolute;
-  margin-top: 10px;
+  top: 565px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .pokeCard {
   display: flex;
-  flex-direction: column; /* Stack elements vertically */
-  align-items: center; /* Center horizontally */
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 300px;
   height: 100%;
-  margin-bottom: 200px;
-  margin-left: 150px;
+  margin-left: 350px;
+  margin-bottom: 250px;
 }
 
 .pokemon-card {
-  position: absolute;
-  width: 300px;
+  position: flex;
+  width: 3275px;
   height: 400px;
-  background: #f5f5f5;
+  background: #fff;
   border-radius: 20px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   padding: 20px;
@@ -116,15 +143,17 @@
 .pokemon-name {
   position: absolute;
   top: 10px;
-  left: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 15px;
   font-weight: bold;
   color: #333;
 }
 
 .pokemon-image {
-  width: 180px;
-  height: 180px;
+  position: absolute;
+  width: 250px;
+  height: 250px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -132,7 +161,9 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  margin-top: 10%;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .pokemon-image img {
@@ -141,16 +172,23 @@
 }
 
 .pokemon-type {
-  margin-bottom: 30%;
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 18px;
   font-weight: bold;
   color: #555;
-  margin-top: 10px;
 }
 
 .pokedex h3 {
-  margin-top: 20px;        
-  text-align: center; 
+  color: #fff;
+  position: absolute;
+  top: 525px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  margin: 0;
 }
 
 .pokedex-button {
@@ -160,4 +198,36 @@
   padding: 10px 20px;
   border: none; 
   cursor: pointer;
+}
+
+.navbar-logo {
+  height: 60px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 10px;
+}
+
+.logout-link {
+  margin-left: auto;
+  background: #fff;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  font-weight: 700;
+  padding: 5px 20px;
+}
+
+.logout-link:focus {
+  outline: none;
 }

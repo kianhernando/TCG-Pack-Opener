@@ -7,6 +7,7 @@ import PokemonCard from "../../models/PokemonCard";
 import { supabase } from "../../lib/supabaseClient";
 import { handleLogout } from "../../utils/auth";
 import { Link } from 'react-router-dom';
+import pokeball from "../../pages/Assets/pokemon-ball-icon-4-1679788945.png";
 
 export default function PokemonCards() {
   const [pokemon, setPokemon] = useState([]);
@@ -92,7 +93,7 @@ export default function PokemonCards() {
     <div>
       <nav className="navbar">
         <div className="navbar-container">
-          <h3>TCG Pack Opener</h3>
+          <img src={pokeball} alt="Pokemon Logo" className="navbar-logo" />
           <button onClick={handleLogout} className="logout-link">
             Logout
           </button>
@@ -108,7 +109,7 @@ export default function PokemonCards() {
           <div className="pokemon-card">
             <div className="pokemon-name">
               <h1>
-                {currentPokemon.name} {currentPokemon.isShiny && "✨"}
+                {currentPokemon.name.charAt(0).toUpperCase() + currentPokemon.name.slice(1)} {currentPokemon.isShiny && "✨"}
               </h1>
             </div>
 
@@ -117,7 +118,7 @@ export default function PokemonCards() {
             </div>
 
             <div className="pokemon-type">
-              <h3>Type: {currentPokemon.type}</h3>
+              <h3>Type: {currentPokemon.type.charAt(0).toUpperCase() + currentPokemon.type.slice(1)}</h3>
             </div>
           </div>
         </div>
@@ -144,6 +145,9 @@ export default function PokemonCards() {
         <div className="genPokemon">
           <button onClick={savePokemonToInventory}>
             Save Pokemon to Inventory
+          </button>
+          <button onClick={searchPokemon}>
+            Generate New Pokemon
           </button>
         </div>
       </div>

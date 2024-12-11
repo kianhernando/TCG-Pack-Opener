@@ -66,17 +66,17 @@ export default function PokemonInventory() {
         <div>
             <nav className="navbar">
                 <div className="navbar-container">
-                    <Link to="/" className="logout-link">
+                    <Link to="/" className="nav-link">
                         Generate More Pokemon
                     </Link>
-                    <h3>TCG Pack Opener</h3>
-                    <button onClick={handleLogout} className="logout-link">Logout</button>
+                    <h3 className="nav-title">TCG Pack Opener</h3>
+                    <button onClick={handleLogout} className="nav-link">Logout</button>
                 </div>
             </nav>
 
             <div className="header">
                 <h1>Your Pokémon Collection</h1>
-                <p>Save and view your generated Pokémon cards here!</p>
+                <p>Your Pokemon Collection</p>
             </div>
 
             {isLoading ? (
@@ -87,7 +87,7 @@ export default function PokemonInventory() {
                         <div key={index} className="pokemon-card">
                             <div className="pokemon-name">
                                 <h1>
-                                    {pokemon.name} {pokemon.isShiny && "✨"}
+                                    {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)} {pokemon.isShiny && "✨"}
                                 </h1>
                             </div>
 
@@ -95,12 +95,13 @@ export default function PokemonInventory() {
                                 <img src={pokemon.getImage()} alt={pokemon.name} />
                             </div>
 
-                            <div className="pokemon-type">
-                                <h3>Type: {pokemon.type}</h3>
-                            </div>
-
-                            <div className="pokedex">
-                                <h3>National Pokedex #{pokemon.id}</h3>
+                            <div className="pokemon-info">
+                                <div className="pokemon-type">
+                                    <h3>Type: {pokemon.type.charAt(0).toUpperCase() + pokemon.type.slice(1)}</h3>
+                                </div>
+                                <div className="pokemon-dex">
+                                    <h3>National Pokedex #{pokemon.id}</h3>
+                                </div>
                             </div>
 
                             <button 
