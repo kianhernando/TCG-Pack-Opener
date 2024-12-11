@@ -123,7 +123,7 @@ export default function PokemonCards() {
           </div>
         </div>
 
-        <div className="pokedex">
+        <div className="pokemon-nav-pokedex">
           <h3>National Pokedex #{currentPokemon.id}</h3>
         </div>
 
