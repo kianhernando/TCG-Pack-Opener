@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import './PokemonInventory.css';
-import { supabase } from '../../lib/supabaseClient';
+import { supabase } from '../../auth/supabaseClient';
 import PokemonCard from '../../models/PokemonCard';
-import { handleLogout } from '../../utils/auth';
+import { handleLogout } from '../../auth/auth';
 import { Link } from 'react-router-dom';
 
 export default function PokemonInventory() {
@@ -78,7 +78,7 @@ export default function PokemonInventory() {
                 <div>Loading your collection...</div>
             ) : (
                 <div className="card-grid">
-                    {pokemonData.map((pokemon, index) => (
+                    {pokemonData.map((pokemon, index) => ( /* THANKS LEETCODE AND HUNG BUI FOR TEACHING ME MAP */
                         <div key={index} className="pokemon-card">
                             <div className="pokemon-name">
                                 <h1>
@@ -104,7 +104,7 @@ export default function PokemonInventory() {
                                 onClick={() => handleRemoveCard(cards[index].id)}
                                 title="Remove card"
                             >
-                                ×
+                                
                             </button>
                         </div>
                     ))}

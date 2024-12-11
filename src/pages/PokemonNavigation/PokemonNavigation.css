@@ -1,6 +1,6 @@
 .cardContainer {
   position: relative;
-  background: url(/src/components/PokemonNavigation/3551101-2207410407.png);
+  background: url(/src/components/Assets/3551101-2207410407.png);
   opacity: 90%;
   width: 1000px;
   height: 750px;
@@ -236,4 +236,32 @@
 
 .logout-link:focus {
   outline: none;
+}
+
+/* Add this new CSS for the notification */
+.save-notification {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1000;
+  animation: slideDown 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes slideDown {
+  from {
+    top: -50px;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.95);
+  }
+  to {
+    top: 80px;
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
 }

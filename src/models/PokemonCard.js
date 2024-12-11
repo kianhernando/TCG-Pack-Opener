@@ -1,5 +1,5 @@
 import Pokemon from './Pokemon';
-import { supabase } from '../lib/supabaseClient';
+import { supabase } from '../auth/supabaseClient';
 
 class PokemonCard {
   constructor(pokemonNumber, userId = null, isShiny = false, id = null) {
@@ -99,7 +99,7 @@ class PokemonCard {
   }
 }
 
-// When saving a Pokemon to collection:
+// SAVE POKEMON TO USER INVENTORY
 async function savePokemonToCollection(pokemon) {
   try {
     const { data: { user } } = await supabase.auth.getUser();
@@ -108,10 +108,8 @@ async function savePokemonToCollection(pokemon) {
     const pokemonCard = PokemonCard.fromPokemon(pokemon, user.id);
     await pokemonCard.save();
     
-    // Handle success (e.g., show notification)
   } catch (error) {
     console.error('Error saving Pokemon:', error);
-    // Handle error (e.g., show error message)
   }
 }
 

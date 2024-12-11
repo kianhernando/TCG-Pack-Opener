@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './LoginRegister.css';
-import MainPage from '../../pages/MainPage';
+import MainPage from '../MainPage/MainPage';
 import { Link } from 'react-router-dom';
-import { supabase } from '../../lib/supabaseClient';
+import { supabase } from '../../auth/supabaseClient';
+import { useMusicController } from '../../controllers/MusicController';
 
 const LoginRegister = () => {
     const [action, setAction] = useState('');
@@ -13,6 +14,7 @@ const LoginRegister = () => {
         password: '',
         username: ''
     });
+    const { playMusic } = useMusicController();
 
     // INPUT HANDLER
     const handleChange = (e) => {
@@ -34,7 +36,7 @@ const LoginRegister = () => {
             console.log('Logged in user:', user);
             
             // Redirect to main page or handle successful login
-            window.location.href = '/main'; // or use navigation from react-router
+            window.location.href = '/main';
         } catch (error) {
             console.error('Login error:', error.message);
             alert(error.message);

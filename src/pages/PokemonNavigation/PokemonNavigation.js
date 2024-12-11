@@ -1,19 +1,19 @@
 import "./PokemonNavigation.css";
-import Pokemon from "../../models/Pokemon";
 import { useState, useEffect } from "react";
 import PokemonController from "../../controllers/PokemonController";
-import Pokedex from "./Pokedex.png";
+import pokedexImage from '../../components/Assets/Pokedex.png';
 import PokemonCard from "../../models/PokemonCard";
-import { supabase } from "../../lib/supabaseClient";
-import { handleLogout } from "../../utils/auth";
+import { supabase } from "../../auth/supabaseClient";
+import { handleLogout } from "../../auth/auth";
 import { Link } from 'react-router-dom';
-import pokeball from "../../pages/Assets/pokemon-ball-icon-4-1679788945.png";
+import pokemonBallIcon from '../../components/Assets/pokemon-ball-icon-4-1679788945.png';
 
 export default function PokemonCards() {
   const [pokemon, setPokemon] = useState([]);
   const [pokemonChosen, setPokemonChosen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [showSaveNotification, setShowSaveNotification] = useState(false);
 
   useEffect(() => {
     searchPokemon();
@@ -58,7 +58,8 @@ export default function PokemonCards() {
       });
 
       await Promise.all(savePromises);
-      alert("Pokemon saved to inventory!");
+      setShowSaveNotification(true);
+      setTimeout(() => setShowSaveNotification(false), 3000);
     } catch (error) {
       console.error("Error saving Pokemon:", error);
       alert("Failed to save Pokemon. Please try again.");
@@ -91,9 +92,14 @@ export default function PokemonCards() {
 
   return (
     <div>
+      {showSaveNotification && (
+        <div className="save-notification">
+          Pokemon saved to inventory!
+        </div>
+      )}
       <nav className="navbar">
         <div className="navbar-container">
-          <img src={pokeball} alt="Pokemon Logo" className="navbar-logo" />
+          <img src={pokemonBallIcon} alt="Pokemon Logo" className="navbar-logo" />
           <button onClick={handleLogout} className="logout-link">
             Logout
           </button>
@@ -101,7 +107,7 @@ export default function PokemonCards() {
       </nav>
 
       <Link to="/inventory" className="pokedex-button">
-        <img src={Pokedex} alt="pokedex" className="pokeball-image" />
+        <img src={pokedexImage} alt="pokedex" className="pokeball-image" />
       </Link>
 
       <div className="cardContainer">
