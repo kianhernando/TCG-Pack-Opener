@@ -8,6 +8,7 @@ class Pokemon {
     this.shinyImg = data.sprites.front_shiny;
     this.type = data.types[0].type.name;
     this.isShiny = Math.random() < 0.05; // 5% CHANCE FOR SHINY
+    this.cryUrl = data.cries.latest; // Renamed from this.cry to this.cryUrl
   }
 
   toCard(userId = null) {

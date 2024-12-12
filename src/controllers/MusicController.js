@@ -7,7 +7,7 @@ export function useMusicController() {
   useEffect(() => {
     // Create audio element
     audioRef.current = new Audio('/lake.mp3');
-    audioRef.current.volume = 0.10;
+    audioRef.current.volume = 0.25;
     audioRef.current.loop = true;
 
     // Create separate handler functions so they can be properly removed

@@ -14,15 +14,23 @@ export default function PokemonCards() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [showSaveNotification, setShowSaveNotification] = useState(false);
+  const [audio, setAudio] = useState(null);
 
   useEffect(() => {
     searchPokemon();
   }, []);
 
-  const nextPokemon = () =>
-    setCurrentIndex((prev) => (prev + 1) % pokemon.length);
-  const prevPokemon = () =>
-    setCurrentIndex((prev) => (prev - 1 + pokemon.length) % pokemon.length);
+  const nextPokemon = () => {
+    const nextIndex = (currentIndex + 1) % pokemon.length;
+    setCurrentIndex(nextIndex);
+    playPokemonCry(nextIndex);
+  };
+
+  const prevPokemon = () => {
+    const prevIndex = (currentIndex - 1 + pokemon.length) % pokemon.length;
+    setCurrentIndex(prevIndex);
+    playPokemonCry(prevIndex);
+  };
 
   const searchPokemon = () => {
     setIsLoading(true);
@@ -65,6 +73,27 @@ export default function PokemonCards() {
       alert("Failed to save Pokemon. Please try again.");
     }
   };
+
+  const playPokemonCry = (index = currentIndex) => {
+    if (!pokemon[index]?.cryUrl) {
+      console.warn("No cry URL available for this Pokemon");
+      return;
+    }
+
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+    const newAudio = new Audio(pokemon[index].cryUrl);
+    setAudio(newAudio);
+    newAudio.play().catch(error => console.error("Error playing cry:", error));
+  };
+
+  useEffect(() => {
+    if (pokemon.length > 0 && pokemonChosen) {
+      playPokemonCry();
+    }
+  }, [pokemonChosen, pokemon]);
 
   if (isLoading || !pokemonChosen || !pokemon || pokemon.length === 0) {
     return (
